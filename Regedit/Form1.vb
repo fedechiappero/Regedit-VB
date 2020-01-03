@@ -21,12 +21,18 @@ Public Class Form1
 
         ' read registry entry and check his value
         readValue = baseKey.OpenSubKey("SOFTWARE\Test")
-        Try
+        Try '
             If readValue.GetValue(serial.Trim) Is Nothing Then
-                MsgBox("doesn't exist")
+                Dim msg = InputBox("Serial input...", "Provide a serial", Nothing)
+                baseKey.OpenSubKey("SOFTWARE", True).OpenSubKey("Test", True).CreateSubKey(msg.Trim).SetValue(msg.Trim, "test")
+                My.Computer.Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\Test", msg.Trim, "test")
+                'Dim regKey As RegistryKey
+                'regKey = Registry.LocalMachine.OpenSubKey("SOFTWARE", True).OpenSubKey("Test", True)
+                'regKey.SetValue(serial.Trim, "fake value")
+                'Dim writeValue = baseKey.CreateSubKey("SOFTWARE\Test", serial.Trim, "fake value")
+                'writeValue.SetValue(serial.Trim)
             Else
                 MsgBox("readed value: " + readValue.GetValue(serial.Trim))
-                Me.Show()
             End If
         Catch ex As Exception
             MessageBox.Show(ex.Message)
