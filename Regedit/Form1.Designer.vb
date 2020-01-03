@@ -22,9 +22,28 @@ Partial Class Form1
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        components = New System.ComponentModel.Container()
+        Me.txt_serial = New System.Windows.Forms.TextBox()
+        Me.SuspendLayout()
+        '
+        'txt_serial
+        '
+        Me.txt_serial.Location = New System.Drawing.Point(79, 116)
+        Me.txt_serial.Name = "txt_serial"
+        Me.txt_serial.Size = New System.Drawing.Size(100, 20)
+        Me.txt_serial.TabIndex = 0
+        '
+        'Form1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.ClientSize = New System.Drawing.Size(284, 261)
+        Me.Controls.Add(Me.txt_serial)
+        Me.Name = "Form1"
         Me.Text = "Form1"
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
     End Sub
+    Friend WithEvents txt_serial As System.Windows.Forms.TextBox
 
 End Class
