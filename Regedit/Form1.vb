@@ -20,11 +20,7 @@ Public Class Form1
             If Registry.LocalMachine.OpenSubKey("SOFTWARE\OrgName\SoftName") Is Nothing Then ' registry key not found
                 While stayIn ' until click cancel button OR serial input correct 
                     Dim msg = InputBox("Serial input...", "Provide a serial", " ")
-                    If msg = "" Then ' cancel button
-                        stayIn = False
-                        Application.Exit()
-                        End
-                    ElseIf msg.Trim = serial.Trim Then ' serial input correct
+                    If msg.Trim = serial.Trim Then ' serial input correct
                         Registry.LocalMachine.OpenSubKey("SOFTWARE", True).CreateSubKey("OrgName\SoftName")
                         Dim values() As String = {}
                         ' new value with serial as name, multiline for storage several values
@@ -32,6 +28,9 @@ Public Class Form1
                         stayIn = False
                     Else
                         MsgBox("Invalid serial")
+                        stayIn = False
+                        Application.Exit()
+                        End
                     End If
                 End While
             End If
