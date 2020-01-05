@@ -12,7 +12,7 @@ Public Class Form1
         Dim hhd As New ManagementObject("win32_physicalmedia='\\.\physicaldrive0'")
         serial = hhd.Properties("serialnumber").Value.ToString
 
-        txt_serial.Text = serial
+        txt_serial.Text = serial.Trim
 
         Try
             If Registry.LocalMachine.OpenSubKey("SOFTWARE\OrgName\SoftName") Is Nothing Then ' registry key not found
