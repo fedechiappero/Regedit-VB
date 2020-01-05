@@ -14,23 +14,32 @@ Public Class Form1
 
         txt_serial.Text = serial.Trim
 
+        Dim stayIn As Boolean = True
         Try
+
             If Registry.LocalMachine.OpenSubKey("SOFTWARE\OrgName\SoftName") Is Nothing Then ' registry key not found
-                Dim msg = InputBox("Serial input...", "Provide a serial", Nothing)
-                If msg.Trim = serial.Trim Then
-                    Registry.LocalMachine.OpenSubKey("SOFTWARE", True).CreateSubKey("OrgName\SoftName")
-                    Dim values() As String = {}
-                    Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\OrgName\SoftName", serial.Trim, values, Microsoft.Win32.RegistryValueKind.MultiString)
-                Else
-                    MsgBox("Invalid serial")
-                End If
+                While stayIn
+                    Dim msg = InputBox("Serial input...", "Provide a serial", " ")
+                    If msg = "" Then 'cancel
+                        stayIn = False
+                        Application.Exit()
+                        End
+                    ElseIf msg.Trim = serial.Trim Then
+                        Registry.LocalMachine.OpenSubKey("SOFTWARE", True).CreateSubKey("OrgName\SoftName")
+                        Dim values() As String = {}
+                        Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\OrgName\SoftName", serial.Trim, values, Microsoft.Win32.RegistryValueKind.MultiString)
+                        stayIn = False
+                    Else
+                        MsgBox("Invalid serial")
+                    End If
+                End While
             End If
+
+            readValues()
 
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
-
-        readValues()
 
     End Sub
 
@@ -48,6 +57,7 @@ Public Class Form1
 
             If values.Length > 0 Then
                 Registry.SetValue("HKEY_LOCAL_MACHINE\SOFTWARE\OrgName\SoftName", serial.Trim, values, Microsoft.Win32.RegistryValueKind.MultiString)
+                MsgBox("New values saved")
             Else
                 MsgBox("No values to save")
             End If
@@ -58,10 +68,11 @@ Public Class Form1
 
     Private Sub readValues()
         Dim values() As String = {}
-        Dim i As Integer
-        values = Registry.LocalMachine.OpenSubKey("SOFTWARE\OrgName\SoftName\").GetValue(serial.Trim)
-        For Each line As String In values
-            Me.txt_values.Text += line
-        Next
+        If Registry.LocalMachine.OpenSubKey("SOFTWARE\OrgName\SoftName\").ValueCount > 0 Then
+            values = Registry.LocalMachine.OpenSubKey("SOFTWARE\OrgName\SoftName\").GetValue(serial.Trim)
+            For Each line As String In values
+                Me.txt_values.Text += line & Environment.NewLine
+            Next
+        End If
     End Sub
 End Class
