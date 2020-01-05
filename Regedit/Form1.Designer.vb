@@ -46,7 +46,6 @@ Partial Class Form1
         Me.txt_values.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
         Me.txt_values.Size = New System.Drawing.Size(124, 67)
         Me.txt_values.TabIndex = 1
-        Me.txt_values.Text = "efeAohDObmFTRx5" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "2YeDBKeOCeqVpHs" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "3y5BHI3XGB0adEU" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "RO5HpPd8y10960q"
         '
         'btn_save
         '

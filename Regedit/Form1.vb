@@ -30,6 +30,7 @@ Public Class Form1
             MessageBox.Show(ex.Message)
         End Try
 
+        readValues()
 
     End Sub
 
@@ -53,5 +54,14 @@ Public Class Form1
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+    End Sub
+
+    Private Sub readValues()
+        Dim values() As String = {}
+        Dim i As Integer
+        values = Registry.LocalMachine.OpenSubKey("SOFTWARE\OrgName\SoftName\").GetValue(serial.Trim)
+        For Each line As String In values
+            Me.txt_values.Text += line
+        Next
     End Sub
 End Class
